@@ -11,13 +11,10 @@
 
     $conn = mysqli_connect("localhost", "root", "", "ajax") or die("connection error!");
 
-    if(!empty($_POST)){
-
-        
+    if(!empty($_POST['fname']) && !empty( $_POST['lsname']) && !empty( $_POST['email'])){
         $firstName = $_POST['fname'];
         $lastName = $_POST['lsname'];
         $email = $_POST['email'];  
-        
         $insert = "INSERT into students(firstname, lastname, email) VALUES('$firstName', '$lastName', '$email')";
 
         $result = mysqli_query($conn, $insert);
@@ -27,8 +24,8 @@
         }else{
             echo 0;
         }
-
     }
+        
 
 
 
