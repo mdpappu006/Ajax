@@ -24,17 +24,17 @@
                         <div class="row">
                             <div class="col-xxl-6 mb-3">
                                 <label for="firstname" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="firstname">
+                                <input type="text" class="form-control" id="fname" require>
                             </div>
 
                             <div class="col-xxl-6 mb-3">
                                 <label for="lastname" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="lastname">
+                                <input type="text" class="form-control" id="lname" require>
                             </div>
 
                             <div class="col-xxl-12 mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email">
+                                <input type="email" class="form-control" id="email" require>
                             </div>
 
                             <div class="col-xxl-12 mb-3">
@@ -73,5 +73,50 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 
+    <script>
+        (function($){
+            $(document).ready(function(){
+
+                function dataShow(){
+                    $.ajax({
+                        "url": 'backend.php',
+                        "success": function(result){
+                            $("#showData").html(result);
+                        }
+                    });
+                }
+                dataShow();
+
+                $("#addData").on("click",function(e){
+                    // let params = {
+                    //     "firstn": $("#fname").val(),
+                    //     "ln": $("#lname").val(),
+                    //     "mail": $("#email").val(),
+                    //     "btn": $("#addData").val("formSubmit")
+                    // }
+
+                    var firstn = $("#fname").val();
+                    var ln = $("#lname").val();
+                    var mail = $("#email").val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'backend.php',
+                        data: {fname: firstn, lsname: ln, email:mail},
+                        success: function(result){
+                            if(result == 1){
+                                dataShow();
+                            }
+                        }
+                    }).done(function(msg){
+                        $("#showData").html(msg);
+                    })
+                    $(".mainForm :input").val("");
+
+                    return false;
+                });
+            });
+        })(jQuery);
+    </script>
 </body>
 </html>
